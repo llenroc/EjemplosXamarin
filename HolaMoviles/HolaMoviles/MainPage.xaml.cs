@@ -32,6 +32,12 @@ namespace HolaMoviles
 
 				ListaGeneral.Add(new Contratista() { Nombre = texto.Text });
 			};
-		}
+
+            botonWeb.Clicked += (s, e) => {
+                var servicio = new Servicios.ServicioRest();
+
+                servicio.Conectar();
+            };
+        }
 	}
 }

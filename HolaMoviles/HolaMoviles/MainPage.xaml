@@ -6,8 +6,9 @@
 	    	   Placeholder = "Su nombre aqui"
 			   VerticalOptions="Center" HorizontalOptions="Center" />
 	    <Button x:Name="boton" Text="Haga click" />
+      <Button x:Name="botonWeb" Text="Hacer llamada" />
 
-		<ListView x:Name="listadoDatos" IsPullToRefreshEnabled="true">
+      <ListView x:Name="listadoDatos" IsPullToRefreshEnabled="true">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<TextCell Text="{Binding Nombre}" />
