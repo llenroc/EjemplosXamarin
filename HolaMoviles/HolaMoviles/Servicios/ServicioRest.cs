@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,13 +21,17 @@ namespace HolaMoviles.Servicios
 
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.BaseAddress = new Uri("http://restcountries.eu/rest/v2");
-                    var resultado = await httpClient.GetStringAsync("/all").ConfigureAwait(false);
+					var llamada = await httpClient.GetAsync("http://restcountries.eu/rest/v1/all").ConfigureAwait(false);
 
-                    //var resultado = await httpClient.GetAsync("/all").ConfigureAwait(false);
+					if (llamada.IsSuccessStatusCode)
+					{
+						var resultado = await llamada.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+						Debug.WriteLine(resultado);
+					}
+                    //var resultado = await httpClient.GetAsync("/").ConfigureAwait(false);
 
                     //var codigo = resultado.StatusCode;
-                    Debug.WriteLine(resultado);
                 }
             }
             catch (Exception ex)
