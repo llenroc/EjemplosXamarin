@@ -12,7 +12,7 @@ namespace HolaMoviles
         // stvansolano@outlook.com
         public App()
         {
-			MainPage = new MainPage();
+			MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

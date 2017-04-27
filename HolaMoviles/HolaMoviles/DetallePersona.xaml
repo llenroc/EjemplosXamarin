@@ -3,14 +3,16 @@
 	<StackLayout Orientation="Vertical"
 				  VerticalOptions="Fill"
 				  HorizontalOptions="Fill">
-		<StackLayout Orientation="Horizontal">
+		<StackLayout Orientation="Vertical">
 			<Label Text="Nombre:" />
 			<Entry x:Name="textoNombre" Text="" />
 		</StackLayout>
-		<StackLayout Orientation="Horizontal">
-			<Label Text="Nombre:" />
-			<Entry Text="" />
+		<StackLayout Orientation="Vertical">
+			<Label Text="Telefono:" />
+			<Entry x:Name="textoTelefono" Text="" />
 		</StackLayout>
 		<Button x:Name="botonGuardar" Text="Guardar" />
-	</StackLayout>
+        <Button x:Name="botonMarcado" Text="Marcar" />
+
+    </StackLayout>
 </ContentPage>
