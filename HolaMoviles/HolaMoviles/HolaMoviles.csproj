@@ -45,6 +45,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Persona.cs" />
+    <Compile Include="Servicios\IDialer.cs" />
     <Compile Include="Servicios\ServicioPaises.cs" />
     <Compile Include="Servicios\ServicioRest.cs" />
   </ItemGroup>

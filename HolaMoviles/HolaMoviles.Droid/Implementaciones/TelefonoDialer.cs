@@ -10,24 +10,43 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using HolaMoviles.Servicios;
+using Android.Telephony;
+using Xamarin.Forms;
 
 namespace HolaMoviles.Droid
 {
     public class TelefonoDialer : IDialer
     {
+        public TelefonoDialer()
+        {
+
+        }
         public void Llamar(string numero)
         {
-            if (!PuedeLlamar())
+            var contexto = Forms.Context;
+
+            var intent = new Intent(Intent.ActionCall);
+            intent.SetData(Android.Net.Uri.Parse("tel:" + numero));
+
+            if (!PuedeLlamar(contexto, intent))
             {
                 return;
             }
-
-            //Context.
+            contexto.StartActivity(intent);
         }
 
-        private bool PuedeLlamar()
+        private bool PuedeLlamar(Context contexto, Intent intent)
         {
-            throw new NotImplementedException();
+            // https:codeshare.io/2EkAlo
+            var packageManager = contexto.PackageManager;
+
+            var list = packageManager.QueryIntentServices(intent, 0)
+                        .Union(packageManager.QueryIntentActivities(intent, 0));
+            if (list.Any())
+                return true;
+
+            TelephonyManager mgr = TelephonyManager.FromContext(contexto);
+            return mgr.PhoneType != PhoneType.None;
         }
     }
 }

@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
+using HolaMoviles.Servicios;
 
 namespace HolaMoviles.Droid
 {
@@ -20,6 +22,9 @@ namespace HolaMoviles.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            DependencyService.Register<IDialer, TelefonoDialer>();
+
             LoadApplication(new App());
         }
     }
