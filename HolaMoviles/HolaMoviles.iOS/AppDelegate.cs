@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using HolaMoviles.Servicios;
 using UIKit;
+using Xamarin.Forms;
 
 namespace HolaMoviles.iOS
 {
@@ -23,6 +25,8 @@ namespace HolaMoviles.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+			DependencyService.Register<IDialer, TelefonoDialer>();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

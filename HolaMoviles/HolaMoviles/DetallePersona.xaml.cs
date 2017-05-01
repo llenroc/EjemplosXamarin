@@ -8,6 +8,11 @@ namespace HolaMoviles
 {
 	public partial class DetallePersona : ContentPage
 	{
+		public DetallePersona()
+		{
+			InitializeComponent();
+
+		}
 		public DetallePersona(Persona persona)
 		{
 			InitializeComponent();
