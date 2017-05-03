@@ -38,6 +38,15 @@ namespace HolaMoviles
 
                 servicio.Conectar();
             };
+
+			listadoDatos.ItemTapped += async(sender, e) => {
+				var modelo = e.Item as Persona;
+				if (modelo == null)
+				{
+					return;
+				}
+				await Navigation.PushModalAsync(new DetallePersona());
+			};
         }
     }
 }

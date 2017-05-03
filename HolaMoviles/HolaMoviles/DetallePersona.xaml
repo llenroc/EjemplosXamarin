@@ -1,16 +1,19 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HolaMoviles.DetallePersona">
-    <StackLayout Orientation="Vertical"
-				  VerticalOptions="Fill"
-				  HorizontalOptions="Fill">
-        <StackLayout Orientation="Horizontal">
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 x:Class="HolaMoviles.DetallePersona"
+			 xmlns:mapas="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+    <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical">
             <Label Text="Nombre:" />
             <Entry x:Name="textoNombre" Text="" />
         </StackLayout>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Nombre:" />
+        <StackLayout Orientation="Vertical">
+            <Label Text="Telefono:" />
             <Entry Text="" />
         </StackLayout>
         <Button x:Name="botonGuardar" Text="Guardar" />
+        <Button x:Name="botonUbicacion" Text="Mostrar ubicacion" />
+		<mapas:Map x:Name="Mapa" HasZoomEnabled="True" IsShowingUser="true" HasScrollEnabled="true" />
     </StackLayout>
 </ContentPage>
