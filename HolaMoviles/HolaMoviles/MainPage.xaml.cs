@@ -45,7 +45,7 @@ namespace HolaMoviles
 				{
 					return;
 				}
-				await Navigation.PushModalAsync(new DetallePersona());
+				await Navigation.PushAsync(new DetallePersona());
 			};
         }
     }

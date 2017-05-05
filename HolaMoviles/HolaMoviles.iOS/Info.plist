@@ -52,5 +52,11 @@
 	<string>HolaMoviles</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Use location services</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Uses your camera for taking photos</string>
+	<key>Custom Property</key>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Uses Photo Library for displaying photos</string>
 </dict>
 </plist>

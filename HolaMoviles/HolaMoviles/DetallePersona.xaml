@@ -14,6 +14,8 @@
         </StackLayout>
         <Button x:Name="botonGuardar" Text="Guardar" />
         <Button x:Name="botonUbicacion" Text="Mostrar ubicacion" />
+
+        <Button x:Name="botonFoto" Text="Tomar imagen" />
 		<mapas:Map x:Name="Mapa" HasZoomEnabled="True" IsShowingUser="true" HasScrollEnabled="true" />
     </StackLayout>
 </ContentPage>

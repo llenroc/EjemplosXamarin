@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Plugin.Media;
 using Xamarin.Forms;
 
 namespace HolaMoviles
@@ -12,7 +12,9 @@ namespace HolaMoviles
         // stvansolano@outlook.com
         public App()
         {
-			MainPage = new MainPage();
+			CrossMedia.Current.Initialize();
+
+			MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Plugin.Media;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -21,7 +22,49 @@ namespace HolaMoviles
 				}
 				catch (Exception ex)
 				{
-					DisplayAlert("Error", ex.Message, "Cerrar");
+					await DisplayAlert("Error", ex.Message, "Cerrar");
+				}
+			};
+
+			botonFoto.Clicked += async(sender, e) => 
+			{
+				try
+				{
+					Plugin.Media.Abstractions.MediaFile foto = null;
+
+					if (CrossMedia.Current.IsCameraAvailable)
+					{
+						var fotoOpciones = new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+						{
+							Directory = "Xamarin",
+							Name = $"{DateTime.UtcNow}.jpg"
+						};
+
+						foto = await CrossMedia.Current.TakePhotoAsync(fotoOpciones);
+					}
+
+					if (foto == null && CrossMedia.Current.IsPickPhotoSupported)
+					{
+
+						var galeriaOpciones = new Plugin.Media.Abstractions.PickMediaOptions()
+						{
+							CompressionQuality = 100
+						};
+
+						foto = await CrossMedia.Current.PickPhotoAsync(galeriaOpciones);
+					}
+
+					if (foto == null)
+					{
+						return;
+					}
+					var imagen = new Image { Source = ImageSource.FromFile(foto.Path) };
+
+					await Navigation.PushAsync(new ContentPage { Title = "Imagen cargada", Content = imagen });
+				}
+				catch (Exception ex)
+				{
+					await DisplayAlert("Error", ex.Message, "Cerrar");
 				}
 			};
 		}
