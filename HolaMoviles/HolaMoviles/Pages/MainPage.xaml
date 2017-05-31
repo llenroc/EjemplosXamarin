@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="HolaMoviles.MainPage" Title="Imagenes">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="+" x:Name="buttonAdd" />
+	</ContentPage.ToolbarItems>
+    <StackLayout x:Name="content" Orientation="Vertical">
+        <ListView x:Name="ListViewCaptures" IsPullToRefreshEnabled="true"
+				  ItemsSource="{Binding MediaCaptures}"
+				  HasUnevenRows="true">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+					<ViewCell Height="110">
+						<StackLayout Orientation="Horizontal" Padding="5">
+							<StackLayout Orientation="Vertical">
+								<Image Source="{Binding ImageSource}" HeightRequest="80" WidthRequest="80" />
+								<StackLayout Orientation="Horizontal">
+									<BoxView Style="{DynamicResource ColorBoxView}"
+											 Color="{Binding PrimaryColor}" />
+									<BoxView Style="{DynamicResource ColorBoxView}"
+											 Color="{Binding AccentColor}" />
+									<BoxView Style="{DynamicResource ColorBoxView}"
+											 Color="{Binding SecondaryColor}" />
+								</StackLayout>
+							</StackLayout>
+							
+							<StackLayout Orientation="Vertical"
+										 VerticalOptions="Center"
+										 Margin="5,0,0,0">
+								<Label Text="{Binding Description}" />
+								<Label Text="{Binding Confidence, StringFormat='{0:F2}%'}" />
+							</StackLayout>
+						</StackLayout>
+					</ViewCell>
+				</DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
