@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ProjectOxford.Vision.Contract;
 using Plugin.Media;
 using Xamarin.Forms;
 
@@ -14,16 +13,38 @@ namespace HolaMoviles
 	{
 		protected byte[] MediaStream { get; set; }
 		protected CognitiveService CognitiveService { get; set; } = new CognitiveService();
-		protected ImageCaptureViewModel CaptureResult;
-		protected MainPage MainPage { get; private set; }
+		protected ICollection<ImageCaptureViewModel> Captures { get; set; }
+
+		private ImageCaptureViewModel _captureResult;
+		public ImageCaptureViewModel CaptureResult
+		{
+			get { return _captureResult; }
+			set
+			{
+				_captureResult = value;
+				OnPropertyChanged(nameof(CaptureResult));
+			}
+		}
 
 		public ImageCapturePage()
 		{
 			CaptureResult = new ImageCaptureViewModel();
 
 			InitializeComponent();
-
 			InitializeControls();
+		}
+
+		public ImageCapturePage(ICollection<ImageCaptureViewModel> captures) : this()
+		{
+			Captures = captures;
+		}
+
+		public ImageCapturePage(ICollection<ImageCaptureViewModel> allCaptures, ImageCaptureViewModel editCapture) : this(allCaptures)
+		{
+			CaptureResult = editCapture;
+
+			MediaStream = null;
+			LoadMedia();
 		}
 
 		private void InitializeControls()
@@ -35,7 +56,6 @@ namespace HolaMoviles
 				await FormsUtils.RunAsBusyAsync(this, async () =>
 				{
 					await CaptureMedia();
-					AnalyzeMedia();
 
 				}).ConfigureAwait(false);       
 			});
@@ -46,7 +66,6 @@ namespace HolaMoviles
 				await FormsUtils.RunAsBusyAsync(this, async () =>
 				{
 					await BrowseMedia();
-					AnalyzeMedia();
 
 				}).ConfigureAwait(false);
 
@@ -54,10 +73,47 @@ namespace HolaMoviles
 
 			buttonAnalyze.Command = new Command(async obj =>
 			{
-				await FormsUtils.RunAsBusyAsync(this, AnalyzeMedia).ConfigureAwait(false);
-			});
+				await FormsUtils.RunAsBusyAsync(this, () => {
 
-			buttonSave.Command = new Command(obj => Save());
+					AnalyzeMedia();
+					AnalyzeText();
+					Save();
+
+				}).ConfigureAwait(false);
+			});
+		}
+
+		private async void AnalyzeText()
+		{
+			if (MediaStream == null)
+			{
+				return;
+			}
+			var result = await CognitiveService.RecognizeTextAsync(MediaStream);
+
+			StringBuilder builder = new StringBuilder();
+			var allLines = result.Regions.SelectMany(region => region.Lines).ToList();
+
+			foreach (var line in allLines)
+			{
+				var lineWords = line.Words.ToList();
+
+				foreach (var word in lineWords)
+				{
+					builder.Append($"{word.Text}");
+
+					if (lineWords.IndexOf(word) + 1 < lineWords.Count)
+					{
+						builder.Append(" ");
+					}
+				}
+
+				if (allLines.IndexOf(line) + 1 < allLines.Count)
+				{
+					builder.Append(" ");
+				}
+			}
+			CaptureResult.RecognizedText = builder.ToString();
 		}
 
 		private async Task CaptureMedia()
@@ -67,7 +123,7 @@ namespace HolaMoviles
 				var galeriaOpciones = new Plugin.Media.Abstractions.StoreCameraMediaOptions()
 				{
 					SaveToAlbum = false,
-					CompressionQuality = 30
+					CompressionQuality = 20
 				};
 
 				using (var media = await CrossMedia.Current.TakePhotoAsync(galeriaOpciones).ConfigureAwait(false))
@@ -78,22 +134,13 @@ namespace HolaMoviles
 			LoadMedia();
 		}
 
-		void LoadMedia()
+		private void LoadMedia()
 		{
 			if (MediaStream == null)
 			{
 				return;
 			}
-			CaptureResult.ImageSource = ImageSource.FromStream(() => new MemoryStream(MediaStream));
-			var image = new Image { Source = CaptureResult.ImageSource };
-
-			Device.BeginInvokeOnMainThread(() => MediaContainer.Content = image);
-		}
-
-		public ImageCapturePage(MainPage mainPage)
-			: this()
-		{
-			MainPage = mainPage;
+			CaptureResult.ImageSource = MediaStream;
 		}
 
 		private async Task BrowseMedia()
@@ -121,7 +168,7 @@ namespace HolaMoviles
 			}
 			CaptureResult.Description = "Analyzing...";
 
-			var result = await CognitiveService.AnalyzeImage(new MemoryStream(MediaStream)).ConfigureAwait(false);
+			var result = await CognitiveService.AnalyzeImage(MediaStream).ConfigureAwait(false);
 
 			if (result == null)
 			{
@@ -135,7 +182,7 @@ namespace HolaMoviles
 			CaptureResult.Description = caption.Text;
 			CaptureResult.VerbosedDescription = $" {caption.Text}({(caption.Confidence * 100).ToString("F2")}%)";
 
-			CaptureResult.ImageSource = ImageSource.FromStream(() => new MemoryStream(MediaStream));
+			CaptureResult.ImageSource = MediaStream;
 
 			CaptureResult.PrimaryColor = FormsUtils.FromColor(result.Color.DominantColorBackground);
 			CaptureResult.AccentColor = FormsUtils.FromColor(result.Color.AccentColor);
@@ -144,13 +191,9 @@ namespace HolaMoviles
 
 		private async void Save()
 		{
-			try
+			if (!Captures.Contains(CaptureResult))
 			{
-				MainPage?.MediaCaptures.Add(CaptureResult);
-			}
-			catch (Exception ex)
-			{
-
+				Captures.Add(CaptureResult);
 			}
 			await Navigation.PopAsync();
 		}

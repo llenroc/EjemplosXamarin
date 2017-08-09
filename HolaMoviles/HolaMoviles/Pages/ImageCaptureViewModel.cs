@@ -61,8 +61,8 @@ namespace HolaMoviles
 			}
 		}
 
-		private ImageSource _imageSource;
-		public ImageSource ImageSource
+		private byte[] _imageSource;
+		public byte[] ImageSource
 		{
 			get { return _imageSource; }
 			set
@@ -80,6 +80,17 @@ namespace HolaMoviles
 			{
 				_confidence = value;
 				OnPropertyChanged(nameof(Confidence));
+			}
+		}
+
+		private string _recognizedText;
+		public string RecognizedText
+		{
+			get { return _recognizedText; }
+			set
+			{
+				_recognizedText = value;
+				OnPropertyChanged(nameof(RecognizedText));
 			}
 		}
 	}

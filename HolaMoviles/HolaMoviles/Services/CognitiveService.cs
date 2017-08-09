@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ namespace HolaMoviles
 		const string API_KEY = "90447e2668524ea0bad4d714c4446865";
 		const string VISION_URL = "https://westus.api.cognitive.microsoft.com/vision/v1.0";
 
-		public async Task<AnalysisResult> AnalyzeImage(Stream image)
+		public async Task<AnalysisResult> AnalyzeImage(byte[] mediaStream)
 		{
 			AnalysisResult result = null;
 
@@ -30,7 +30,7 @@ namespace HolaMoviles
 				VisualFeature[] features = { VisualFeature.Tags, VisualFeature.Categories, VisualFeature.Description, VisualFeature.Color };
 				var visionClient = new VisionServiceClient(API_KEY);
 
-				result = await visionClient.AnalyzeImageAsync(image, features.ToList(), null);
+				result = await visionClient.AnalyzeImageAsync(new MemoryStream(mediaStream), features.ToList(), null);
 
 				Debug.WriteLine(result.ToString());
 			}
@@ -38,6 +38,22 @@ namespace HolaMoviles
 			{
 				Debug.WriteLine(ex.Message);
 			}
+			return result;
+		}
+
+		public async Task<OcrResults> RecognizeTextAsync(byte[] mediaStream)
+		{
+			if (CrossConnectivity.Current.IsConnected == false)
+			{
+				return null;
+			}
+
+			var visionClient = new VisionServiceClient(API_KEY);
+
+			var result = await visionClient.RecognizeTextAsync(new MemoryStream(mediaStream));
+
+			Debug.WriteLine(result.ToString());
+
 			return result;
 		}
 	}

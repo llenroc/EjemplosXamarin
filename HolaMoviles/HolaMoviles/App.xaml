@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="HolaMoviles.App">
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:converters="clr-namespace:HolaMoviles.Converters;assembly=HolaMoviles"
+	x:Class="HolaMoviles.App">
 	<Application.Resources>
 		<ResourceDictionary>
 			<Style TargetType="BoxView">
@@ -7,6 +10,8 @@
 				<Setter Property="HeightRequest" Value="10" />
 				<Setter Property="Margin" Value="5,0,5,0" />
 			</Style>
+
+			<converters:ImageByteSourceConverter x:Key="ImageByteSourceConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

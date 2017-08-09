@@ -18,7 +18,11 @@ namespace HolaMoviles
 
             buttonAdd.Clicked += async(s, e) =>
             {
-				await Navigation.PushAsync(new ImageCapturePage(this));
+				await Navigation.PushAsync(new ImageCapturePage(MediaCaptures));
+			};
+
+			ListViewCaptures.ItemTapped += async (sender, e) => { 
+				await Navigation.PushAsync(new ImageCapturePage(MediaCaptures, e.Item as ImageCaptureViewModel));
 			};
         }
     }

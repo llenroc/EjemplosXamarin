@@ -13,7 +13,8 @@
 					<ViewCell Height="110">
 						<StackLayout Orientation="Horizontal" Padding="5">
 							<StackLayout Orientation="Vertical">
-								<Image Source="{Binding ImageSource}" HeightRequest="80" WidthRequest="80" />
+								<Image Source="{Binding ImageSource, Converter={StaticResource ImageByteSourceConverter}}" 
+									   HeightRequest="80" WidthRequest="80" />
 								<StackLayout Orientation="Horizontal">
 									<BoxView Style="{DynamicResource ColorBoxView}"
 											 Color="{Binding PrimaryColor}" />
