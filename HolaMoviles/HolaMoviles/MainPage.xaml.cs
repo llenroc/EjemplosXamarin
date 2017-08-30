@@ -1,43 +1,46 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using HolaMoviles.Modelos;
 using Xamarin.Forms;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HolaMoviles
 {
 
-    public partial class MainPage : ContentPage
-    {
-        public ObservableCollection<Persona> ListaGeneral
-        {
-            get;
-            set;
-        }
+	public partial class MainPage : ContentPage
+	{
+		public Persona MiObjeto { get; } = null;
 
-        public MainPage()
-        {
-            InitializeComponent();
-            ListaGeneral = new ObservableCollection<Persona>();
-            listadoDatos.ItemsSource = ListaGeneral;
+		public MainPage()
+		{
+			InitializeComponent();
 
-            boton.Clicked += (s, e) =>
-            {
-                var mensaje = "Hola " + texto.Text;
-                //await DisplayAlert("Mensaje", mensaje, "Cancelar");
+			MiObjeto = new Persona();
 
-                label.Text = mensaje;
+			Action hacerAlgo = new Action(HandleAction);
 
-                /*await Navigation.PushModalAsync(new DetallePersona() { 
-					Nombre = texto.Text 
-				});*/
+			//boton1.Command = new Command((obj) => hacerAlgo());
 
-                ListaGeneral.Add(new Contratista() { Nombre = texto.Text });
-            };
+			boton1.Clicked += (sender, e) =>
+			{
+				MiObjeto.Nombre = $"hola:{ MiObjeto.Nombre}";
 
-            botonWeb.Clicked += (s, e) =>
-            {
-                var servicio = new Servicios.ServicioRest();
+				hacerAlgo();
 
-                servicio.Conectar();
-            };
-        }
-    }
+				//hacerAlgo();
+
+				//hacerAlgo();
+			};
+		}
+
+		async void HandleAction()
+		{
+			await Task.Delay(2000);
+
+			var elementos = new[] { 3, 5, 7, 9 };
+
+			await DisplayAlert("Mensaje importante", "Promedio:" + elementos.Average(), "Cancelar");
+		}
+	}
 }

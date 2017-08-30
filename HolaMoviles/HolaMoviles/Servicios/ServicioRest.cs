@@ -1,6 +1,4 @@
-﻿using HolaMoviles.Modelos;
-using Newtonsoft.Json;
-using Plugin.Connectivity;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

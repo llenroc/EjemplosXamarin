@@ -9,15 +9,9 @@ namespace HolaMoviles
 {
     public class App : Application
     {
-        // stvansolano@outlook.com
         public App()
         {
 			MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        {
-            // Handle when your app starts
         }
     }
 }
