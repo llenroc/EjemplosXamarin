@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace HolaMoviles
 {
-
 	public partial class MainPage : ContentPage
 	{
 		public Persona MiObjeto { get; } = null;
@@ -15,6 +14,10 @@ namespace HolaMoviles
 		public MainPage()
 		{
 			InitializeComponent();
+
+			botonDatos.Clicked += (sender, e) => {
+				Navigation.PushModalAsync(new ListadoPersonas());
+			};
 
 			MiObjeto = new Persona();
 
@@ -28,6 +31,8 @@ namespace HolaMoviles
 
 				hacerAlgo();
 
+
+
 				//hacerAlgo();
 
 				//hacerAlgo();
@@ -37,6 +42,8 @@ namespace HolaMoviles
 		async void HandleAction()
 		{
 			await Task.Delay(2000);
+
+			textoNombre.Text = "cambio en C#";
 
 			var elementos = new[] { 3, 5, 7, 9 };
 

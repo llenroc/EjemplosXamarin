@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 		     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 x:Class="HolaMoviles.MainPage"
-			 Padding="20">
+			 x:Class="HolaMoviles.MainPage">
+	<ContentPage.Padding>
+	<OnPlatform x:TypeArguments="Thickness">
+		<OnPlatform.iOS>
+			20,40,20,40
+		</OnPlatform.iOS>
+	</OnPlatform>
+	</ContentPage.Padding>
 	<StackLayout>
 		<Label Text="Hola:" />
-		<Entry Placeholder="Su nombre aqui" />
+		<Entry x:Name="textoNombre" Placeholder="Su nombre aqui" />
+
+		<Label x:Name="textoReflejo"
+				BindingContext="{x:Reference textoNombre}"
+			    Text="{Binding Text}"
+			   />
+
+
+		<Label BindingContext="{x:Reference textoNombre}"
+			    Text="{Binding Text}"
+			   />
 		
 		<Button x:Name="boton1"
 			  Text="Welcome to Xamarin Forms!" 
 			  VerticalOptions="Center" HorizontalOptions="Start" />
 
-		<Switch IsToggled="True"  /> 
+		<Switch IsToggled="True"   /> 
+
+		<Button x:Name="botonDatos" Text="Ver datos" />
 	</StackLayout>
 </ContentPage>
+	<!-- 
+		<OnPlatform x:TypeArguments="Thickness">
+      <OnPlatform.iOS>
+        0, 20, 0, 0
+      </OnPlatform.iOS>
+      <OnPlatform.Android>
+        0, 0, 0, 0
+      </OnPlatform.Android>
+      <OnPlatform.WinPhone>
+        0, 0, 0, 0
+      </OnPlatform.WinPhone>
+    </OnPlatform>
+
+		BindingContext="{x:Reference slider}"
+		-->
