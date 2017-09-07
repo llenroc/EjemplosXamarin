@@ -27,7 +27,7 @@
 			  Text="Welcome to Xamarin Forms!" 
 			  VerticalOptions="Center" HorizontalOptions="Start" />
 
-		<Switch IsToggled="True"   /> 
+		<Switch IsToggled="True" x:Name="switchNavegacion"  /> 
 
 		<Button x:Name="botonDatos" Text="Ver datos" />
 	</StackLayout>

@@ -12,7 +12,12 @@ namespace HolaMoviles
 		public IList<Persona> Datos { get; set; }
 		public ICommand ComandoRefrescar { get; set; }
 
-		public ListadoPersonas()
+        protected override bool OnBackButtonPressed()
+        {
+            return base.OnBackButtonPressed();
+        }
+
+        public ListadoPersonas()
 		{
 			IsBusy = false;
 

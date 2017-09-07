@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HolaMoviles.Tabulacion"
+            xmlns:paginas="clr-namespace:HolaMoviles">
+    <TabbedPage.Children>
+        <paginas:MainPage Title="Principal" />
+        <ContentPage Title="Titulo 1">
+            <Label Text="etiqueta 1" />
+        </ContentPage>
+        <ContentPage Title="Titulo 2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Text="Pagina de Google" Grid.Row="0" />
+                <WebView Source="http://www.google.com" Grid.Row="1" />
+            </Grid>
+        </ContentPage>
+    </TabbedPage.Children>
+</TabbedPage>

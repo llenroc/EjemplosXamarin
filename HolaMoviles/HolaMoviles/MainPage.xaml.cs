@@ -10,14 +10,27 @@ namespace HolaMoviles
 	public partial class MainPage : ContentPage
 	{
 		public Persona MiObjeto { get; } = null;
+        
+        protected override bool OnBackButtonPressed()
+        {
+            return base.OnBackButtonPressed();
+        }
 
-		public MainPage()
+        public MainPage()
 		{
 			InitializeComponent();
 
 			botonDatos.Clicked += (sender, e) => {
-				Navigation.PushModalAsync(new ListadoPersonas());
-			};
+
+                if (switchNavegacion.IsToggled)
+                {
+                    Navigation.PushAsync(new ListadoPersonas { Title = "Listado" });
+                }
+                else
+                {
+                    Navigation.PushModalAsync(new ListadoPersonas());
+                }
+            };
 
 			MiObjeto = new Persona();
 

@@ -13,7 +13,7 @@ namespace HolaMoviles
     {
         public App()
         {
-			MainPage = new MainPage();
+			MainPage = new NavigationPage(new MaestroDetalle());
         }
 
 		protected override void OnStart()
@@ -32,3 +32,6 @@ namespace HolaMoviles
 		}
     }
 }
+
+// Descargar y abrir en VS2017:
+//https://codeshare.io/2WeQnY
