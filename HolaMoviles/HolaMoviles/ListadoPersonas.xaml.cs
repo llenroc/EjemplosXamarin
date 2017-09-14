@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using HolaMoviles.Modelos;
 using Xamarin.Forms;
+using HolaMoviles.Servicios;
 
 namespace HolaMoviles
 {
@@ -34,5 +35,25 @@ namespace HolaMoviles
 
 			InitializeComponent();
 		}
-	}
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            IsBusy = true;
+
+            var servicio = new ServicioPersonas();
+
+            var resultado = await servicio.ObtenerConCodigo();
+
+            Datos.Clear();
+
+            foreach (var item in resultado)
+            {
+                Datos.Add(item);
+            }
+
+            IsBusy = false;
+        }
+    }
 }
