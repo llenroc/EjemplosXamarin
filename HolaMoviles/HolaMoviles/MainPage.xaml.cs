@@ -28,8 +28,8 @@ namespace HolaMoviles
                 }
                 else
                 {
-                    Navigation.PushModalAsync(new ListadoPersonas());
-                }
+					Navigation.PushModalAsync(new ListadoPersonas { Title = "Listado" });
+				}
             };
 
 			MiObjeto = new Persona();

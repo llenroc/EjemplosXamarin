@@ -1,9 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HolaMoviles.MaestroDetalle">
+             x:Class="HolaMoviles.MaestroDetalle"
+			 Title="Ejemplos Xamarin">
+	<MasterDetailPage.Master>
+		<ContentPage Title="Menu" BackgroundColor="#404040">
+			<ContentPage.Icon>
+				<OnPlatform x:TypeArguments="FileImageSource">
+					<OnPlatform.iOS>menu.png</OnPlatform.iOS>
+				</OnPlatform>
+			</ContentPage.Icon>
+		</ContentPage>
+	</MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <ContentPage>
+        <ContentPage Title="Inicio">
             <ContentPage.Content>
                 <StackLayout>
                     <Label Text="Welcome to Xamarin Forms!" />

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace HolaMoviles
 {
@@ -14,8 +7,6 @@ namespace HolaMoviles
         public MaestroDetalle()
         {
             InitializeComponent();
-
-            Master = new ContentPage() { Title = "Master" };
 
             botonNavegar.Clicked += BotonNavegar_Clicked;
         }

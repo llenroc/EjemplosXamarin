@@ -13,7 +13,7 @@ namespace HolaMoviles
     {
         public App()
         {
-			MainPage = new NavigationPage(new MaestroDetalle());
+			MainPage = new NavigationPage(new MaestroDetalle()) { Title = "Ejemplos Xamarin" };
         }
 
 		protected override void OnStart()
