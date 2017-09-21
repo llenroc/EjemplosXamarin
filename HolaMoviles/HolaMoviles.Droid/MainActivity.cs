@@ -20,7 +20,11 @@ namespace HolaMoviles.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+
+            var formsApp = new App();
+            formsApp.Contexto.RutaConexion = "";
+
+            LoadApplication(formsApp);
         }
     }
 }

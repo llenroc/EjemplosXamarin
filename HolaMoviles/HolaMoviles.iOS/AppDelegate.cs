@@ -23,7 +23,11 @@ namespace HolaMoviles.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            var formsApp = new App();
+            formsApp.Contexto.RutaConexion = "";
+            
+            LoadApplication(formsApp);
 
             return base.FinishedLaunching(app, options);
         }

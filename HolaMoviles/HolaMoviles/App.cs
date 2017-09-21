@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HolaMoviles.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,11 @@ namespace HolaMoviles
 {
     public class App : Application
     {
+        public ContextoDatos Contexto { get; set; }
+
         public App()
         {
+            Contexto = new ContextoDatos();
 			MainPage = new NavigationPage(new MaestroDetalle()) { Title = "Ejemplos Xamarin" };
         }
 
