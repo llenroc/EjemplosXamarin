@@ -22,8 +22,9 @@ namespace HolaMoviles.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             var formsApp = new App();
-            formsApp.Contexto.RutaConexion = "";
-
+            formsApp.Contexto.RutaConexion = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            formsApp.Contexto.RutaConexion += "/almacenamiento.db3";
+            formsApp.Contexto.ObtenerConexion = () => new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(), formsApp.Contexto.RutaConexion);
             LoadApplication(formsApp);
         }
     }

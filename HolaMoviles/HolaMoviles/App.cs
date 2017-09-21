@@ -16,7 +16,10 @@ namespace HolaMoviles
 
         public App()
         {
-            Contexto = new ContextoDatos();
+            DependencyService.Register<ContextoDatos>();
+
+            Contexto = DependencyService.Get<ContextoDatos>();
+
 			MainPage = new NavigationPage(new MaestroDetalle()) { Title = "Ejemplos Xamarin" };
         }
 
@@ -36,6 +39,3 @@ namespace HolaMoviles
 		}
     }
 }
-
-// Descargar y abrir en VS2017:
-//https://codeshare.io/2WeQnY

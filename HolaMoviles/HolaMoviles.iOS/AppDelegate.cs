@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using SQLite.Net;
 using UIKit;
 
 namespace HolaMoviles.iOS
@@ -25,11 +26,24 @@ namespace HolaMoviles.iOS
             global::Xamarin.Forms.Forms.Init();
 
             var formsApp = new App();
-            formsApp.Contexto.RutaConexion = "";
+
+            var fileName = "almacenamiento.db3";
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var libraryPath = System.IO.Path.Combine(documentsPath, "..", "Library");
+            var path = System.IO.Path.Combine(libraryPath, fileName);
+
+            formsApp.Contexto.RutaConexion = path;
+
+            formsApp.Contexto.ObtenerConexion = () => ObtenerConexion(path);
             
             LoadApplication(formsApp);
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private SQLiteConnection ObtenerConexion(string path)
+        {
+            return new SQLiteConnection(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(), path);
         }
     }
 }

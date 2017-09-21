@@ -5,6 +5,9 @@ using System.Windows.Input;
 using HolaMoviles.Modelos;
 using Xamarin.Forms;
 using HolaMoviles.Servicios;
+using Plugin.Connectivity;
+using HolaMoviles.Data;
+using System.Linq;
 
 namespace HolaMoviles
 {
@@ -13,6 +16,8 @@ namespace HolaMoviles
 		public IList<Persona> Datos { get; set; }
 		public ICommand ComandoRefrescar { get; set; }
 
+        public ContextoDatos Contexto { get; set; }
+
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();
@@ -20,7 +25,9 @@ namespace HolaMoviles
 
         public ListadoPersonas()
 		{
-			IsBusy = false;
+            Contexto = DependencyService.Get<ContextoDatos>();
+
+            IsBusy = false;
 
 			Datos = new ObservableCollection<Persona> { 
 				new Persona { Nombre = "Esteban" },
@@ -44,7 +51,17 @@ namespace HolaMoviles
 
             var servicio = new ServicioPersonas();
 
-            var resultado = await servicio.ObtenerConCodigo();
+            Persona[] resultado;
+
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                resultado = await servicio.ObtenerConCodigo();
+                Contexto.Guardar(resultado);
+            }
+            else
+            {
+                resultado = Contexto.Obtener().ToArray();
+            }
 
             Datos.Clear();
 

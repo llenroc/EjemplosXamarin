@@ -17,10 +17,6 @@ namespace HolaMoviles.Servicios
 
         public async Task<Persona[]> Obtener()
         {
-            if (CrossConnectivity.Current.IsConnected == false)
-            {
-                return new Persona[0];
-            }
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(url);

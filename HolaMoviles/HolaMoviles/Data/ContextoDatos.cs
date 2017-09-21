@@ -15,12 +15,26 @@ namespace HolaMoviles.Data
 
         public Func<SQLiteConnection> ObtenerConexion { get; set; }
 
+        public void Guardar(params Persona[] datos)
+        {
+            using (var conexion = ObtenerConexion())
+            {
+                conexion.CreateTable<Persona>();
+                conexion.BeginTransaction();
+
+                foreach (var item in datos)
+                {
+                    conexion.Insert(item);
+                }
+                conexion.Commit();
+            }
+        }
+
         public IEnumerable<Persona> Obtener()
         {
             using (var conexion = ObtenerConexion())
             {
                 var tabla = conexion.Table<Persona>();
-                conexion.CreateTable<Persona>();
 
                 return tabla.ToList();
             }
